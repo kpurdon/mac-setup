@@ -2,19 +2,19 @@
 
 This README and associated scripts are information for setting up a mac for my opinionated developer environment. I only do this once every couple years so many things here may go stale between updates. It's mostly a reference.
 
-Last tested 01/31/2021 on the following:
+Last tested 03/21/2022 on the following:
 
 ```
-MacBook Pro (13-inch, 2017, Two Thunderbolt 3 ports)
-2.3 GHz Dual-Core Intel Core i5
-macOS Big Sur (11.1)
+MacBook Pro (14-inch, 2021)
+Apple M1 Max
+macOS Monterey (12.3)
 ```
 
 ## System Preferences
 
 After the initial setup the always [install all available updates](https://support.apple.com/guide/mac-help/get-macos-updates-mchlpx1065/mac).
 
-The following are some opinionated [System Preferences]().
+The following are some opinionated System Preferences.
 
 ### General
 
@@ -31,7 +31,6 @@ The following are some opinionated [System Preferences]().
 - Disable magnification
 - Enable Automatically Hide & Show Dock
 - Battery -> Show Percentage
-
 
 ### Users & Groups
 
@@ -66,7 +65,7 @@ The following are some opinionated [System Preferences]().
 
 ### Sharing
 
-- Computer Name -> Something Useful (e.g. `kpurdon-work`)
+- Computer Name -> Something Useful (e.g. `kpurdon`)
 
 ### Screenshots
 
@@ -85,6 +84,21 @@ killall SystemUIServer
 This is basically a requirement for a million things installed on macs, so install it.
 
 `xcode-select --install`
+
+### Chrome
+
+[Chrome](https://www.google.com/chrome/) is my browser of choice.
+
+### Iterm2
+
+[Iterm2](https://iterm2.com/) is a Terminal replacement for MacOS.
+
+#### Configuration
+
+1. Clone [iterm2-prefs](https://github.com/kpurdon/iterm2-prefs) into `~/code/github.com/kpurdon/iterm2-prefs`
+2. Open `iterm2` and select `Preferences -> Preferences -> Load Preferences (save manually)`.
+3. Select `~/code/github.com/kpurdon/iterm2-prefs/` as the directory.
+4. Re-start iterm2.
 
 ### SSH
 
@@ -115,72 +129,17 @@ Host *
 
 `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 
-- Generally prefer installing anything/everything w/ `brew ...` over package installers.
-
-### Hack Font
-
-[Hack](https://sourcefoundry.org/hack/) is a great mono-spaced developer font.
-
-```
-brew install homebrew/cask-fonts/font-hack
-```
-
-### Iterm2
-
-[Iterm2](https://iterm2.com/) is a Terminal replacement for MacOS.
-
-`brew install --cask iterm2`
-
-#### Configuration
-
-TODO: export current config as file to save/import
-
 ### Rectangle
 
 [Rectangle](https://rectangleapp.com/) is a window manager for mac. It provides keyboard shortcuts for resizing and arranging windows.
 
-`brew install --cask rectangle`
+### Go
 
-### Bash
+`brew install go`
 
-The version of bash that comes w/ MacOS is often pretty outdated. Install bash from brew and set it as the default shell.
+### Direnv
 
-```
-brew install bash
-echo /usr/local/bin/bash | sudo tee -a /etc/shells
-chsh -s /usr/local/bin/bash
-```
-
-#### Configuration/Profile
-
-TODO: export current config as a file to save/import
-
-### Git
-
-The version  of git that comes w/ MacOS is often pretty outdated. Install from brew.
-
-```
-brew install git
-```
-
-#### Configuration
-
-```
-git config --global user.name "Kyle Purdon"
-git config --global user.email kylepurdon@gmail.com
-git config --global username kpurdon
-git config --global core.editor emacs
-git config --global help.autocorect 1
-git config --global pull.rebase true
-```
-
-#### GPG Signing
-
-If you use commit signing, follow these instructions.
-
-https://docs.github.com/en/github/authenticating-to-github/signing-commits
-https://docs.github.com/en/github/authenticating-to-github/generating-a-new-gpg-key
-https://docs.github.com/en/github/authenticating-to-github/telling-git-about-your-signing-key
+`brew install direnv` lets you configure per-directory environment with `.envrc` files.
 
 ### Python
 
@@ -194,63 +153,97 @@ https://github.com/pyenv/pyenv/wiki#suggested-build-environment
 
 #### Installation
 
-`brew install pyenv pyenv-virtualenv`
-
-Generally this will guide you through the setup, but make sure the following end up in `~/.bash_profile`.
-
-```
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-```
+`brew install pyenv`
 
 #### Pyenv Basics
 
 ```
-pyenv install 3.9.1 # install a specific version
-pyenv global 3.9.1  # set the global version to be used in all shells
-pyenv shell 3.9.1   # set the version for the active shell
-pyenv local 3.9.1   # add a .python-version file to the current directory
+pyenv install 3.10.3 # install a specific version
+pyenv global 3.10.3  # set the global version to be used in all shells
+pyenv shell 3.10.3   # set the version for the active shell
+pyenv local 3.10.3   # add a .python-version file to the current directory
 ```
 
-#### Pyenv Virtualenv Basics
+### Git
+
+The version  of git that comes w/ MacOS is often pretty outdated. Install from brew.
 
 ```
-pyenv virtualenv 3.9.1 # create a virtualenv
-pyenv activate <name>  # activate a virtualenv
-pyenv deactivate       # deactivate a virtualenv
+brew install git
 ```
 
-Of note if a `.python-version` file is present the virtualenv will be automatically activated and deactivated upon entry/exit from that directory.
+#### Configuration
 
-### Go
+```
+git config --global user.name kpurdon
+git config --global user.email kylepurdon@gmail.com
+git config --global core.editor emacs
+git config --global help.autocorect 1
+git config --global pull.rebase true
+git config --global init.defaultBranch main
+```
 
-`brew install go`
+#### GPG Signing
 
-### Chrome
+If you use commit signing, follow these instructions.
 
-`brew install chrome`
+https://docs.github.com/en/github/authenticating-to-github/signing-commits
+https://docs.github.com/en/github/authenticating-to-github/generating-a-new-gpg-key
+https://docs.github.com/en/github/authenticating-to-github/telling-git-about-your-signing-key
+
+1. `brew install gpg` (might need to restart after this install)
+2. `gpg --full-generate-key` (rsa+rsa, 4096, no passphrase)
+3. `gpg --list-secret-keys --keyid-format=long` get the id (e.g. `3AA5C34371567BD2` in the following example)
+4. `pbcopy < gpg --armor --export [keyid]`
+5. https://docs.github.com/en/articles/adding-a-new-gpg-key-to-your-github-account
+6. `git config --global user.signingkey [keyid]` (tell git about the key)
+7. `git config --global commit.gpgsign true` (tell git to always sign commits)
+
+```
+$ gpg --list-secret-keys --keyid-format=long
+/Users/hubot/.gnupg/secring.gpg
+------------------------------------
+sec   4096R/3AA5C34371567BD2 2016-03-10 [expires: 2017-03-10]
+uid                          Hubot
+ssb   4096R/42B317FD4BA89E7A 2016-03-10
+```
+
+### Hack Font
+
+[Hack](https://sourcefoundry.org/hack/) is a great mono-spaced developer font.
+
+```
+brew install homebrew/cask-fonts/font-hack
+```
+
+### Zsh (Oh-My-Zsh)
+
+Follow the instructions in https://github.com/kpurdon/oh-my-zsh-custom to setup oh-my-zsh.
 
 ### Gitify
 
 [Gitify](https://www.gitify.io/) is a really handy git notifications app.
 
-`brew install gitify`
-
 ### Docker
 
-**Warning** (for M1 see https://docs.docker.com/docker-for-mac/apple-m1/)
-
-`brew install docker`
+https://docs.docker.com/desktop/mac/install/
 
 ### Emacs
 
 Install [Emacs for MacOS](https://emacsformacosx.com/) and pull down custom configuration.
 
 ```
-brew install --cask ispell emacs
 pushd $HOME
 rm -rf .emacs.d
 git clone git@github.com:kpurdon/.emacs.d.git
 touch custom.el
 popd
 ```
+
+### Zoom
+
+https://zoom.us/download#client_4meeting
+
+### Boxy Suite
+
+https://www.boxysuite.com/
