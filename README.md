@@ -62,6 +62,7 @@ The following are some opinionated System Preferences.
   - Click -> Medium
   - Tracking speed -> Fast
   - Enable Force Click and haptic feedback
+- [Enable 3-finger drag](https://support.apple.com/en-us/HT204609)
 
 ### Sharing
 
